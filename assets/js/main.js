@@ -215,3 +215,22 @@
 		});
 
 })(jQuery);
+
+document.addEventListener("DOMContentLoaded", function () {
+    const videos = document.querySelectorAll(".carousel video");
+
+    const observer = new IntersectionObserver(
+        (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting && entry.intersectionRatio === 1) {
+                    entry.target.play();
+                } else {
+                    entry.target.pause();
+                }
+            });
+        },
+        { threshold: 1.0 } // Ensures the video is fully visible
+    );
+
+    videos.forEach((video) => observer.observe(video));
+});
