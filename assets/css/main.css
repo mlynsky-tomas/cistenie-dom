@@ -1567,7 +1567,7 @@ input, select, textarea {
 				}
 
 				.row > .col-4-mobile {
-					width: 33.33333%;
+					width: calc(((100% - 10px) / 3));
 				}
 
 				.row > .off-4-mobile {
@@ -1661,7 +1661,7 @@ input, select, textarea {
 				}
 
 					.row.gtr-25 > * {
-						padding: 5px 0 0 5px;
+						padding: 0 3px;
 					}
 
 					.row.gtr-25.gtr-uniform {

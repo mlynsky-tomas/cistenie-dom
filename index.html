@@ -11,6 +11,67 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Modal Background (Black Fade) */
+			.modal {
+				display: none; /* Hidden by default */
+				position: fixed;
+				z-index: 1000;
+				left: 0;
+				top: 0;
+				width: 100vw; /* Full viewport width */
+				height: 100vh; /* Full viewport height */
+				background-color: rgba(0, 0, 0, 0.8); /* Black fade effect */
+				align-items: center;
+				justify-content: center;
+			}
+
+			/* Modal Image */
+			.modal img {
+				max-width: 90%;
+				max-height: 90%;
+				border-radius: 5px;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+			}
+
+			/* Close Button */
+			.modal-close {
+				position: absolute;
+				top: 55px;
+				right: 25px;
+				font-size: 35px;
+				font-weight: bold;
+				color: white;
+				cursor: pointer;
+			}
+
+			/* Navigation Buttons */
+			.modal-nav {
+				position: absolute;
+				top: 50%;
+				transform: translateY(-50%);
+				background: rgba(0, 0, 0, 0.5);
+				color: white;
+				border: none;
+				font-size: 30px;
+				cursor: pointer;
+				width: 10vw;
+			}
+
+			.prev { left: 10px; }
+			.next { right: 10px; }
+
+			.img-thumbnail {
+				background-position: 50%;
+				background-size: cover;
+				width: 100%;
+				height: 20vw;
+			}
+
+			.gallery {
+				gap: 5px;
+			}
+		</style>
 	</head>
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
@@ -176,29 +237,23 @@
 						<div class="row">
 							
 							<!-- Photos -->
-								<section class="col-4 col-12-mobile">
+								<section class="col-12 col-12-mobile">
 									<header>
 										<h2 class="icon solid fa-camera circled"><span class="label">Photos</span></h2>
 									</header>
-									<div class="row gtr-25">
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic10.jpg" alt="" /></a>
-										</div>
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic11.jpg" alt="" /></a>
-										</div>
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic12.jpg" alt="" /></a>
-										</div>
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic13.jpg" alt="" /></a>
-										</div>
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic14.jpg" alt="" /></a>
-										</div>
-										<div class="col-6">
-											<a href="#" class="image fit"><img src="images/pic15.jpg" alt="" /></a>
-										</div>
+									<div class="row gtr-25 gallery">
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo2.jpg');" onclick="openModal(1)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo3.jpg');" onclick="openModal(2)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo4.jpg');" onclick="openModal(3)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo5.jpg');" onclick="openModal(4)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo6.jpg');" onclick="openModal(5)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo7.jpg');" onclick="openModal(6)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo8.jpg');" onclick="openModal(7)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo9.jpg');" onclick="openModal(8)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo10.jpg');" onclick="openModal(9)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo11.jpg');" onclick="openModal(10)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo13.jpg');" onclick="openModal(12)"></div>
+										<div class="col-2 col-4-mobile img-thumbnail" style="background-image: url('images/photo14.jpg');" onclick="openModal(13)"></div>
 									</div>
 								</section>
 
@@ -234,15 +289,104 @@
 
 		</div>
 
+		<div id="galleryModal" class="modal">
+			<span id="closeModal" class="modal-close">&times;</span>
+			<button id="prevImage" class="modal-nav prev">&#10094;</button>
+			<img id="modalImage" src="" alt="Full Size Image">
+			<button id="nextImage" class="modal-nav next">&#10095;</button>
+		</div>
+
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/jquery.scrollex.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+		<script>
+			document.addEventListener("DOMContentLoaded", function () {
+			const modal = document.getElementById("galleryModal");
+			const modalImg = document.getElementById("modalImage");
+			const closeModal = document.getElementById("closeModal");
+			const prevBtn = document.getElementById("prevImage");
+			const nextBtn = document.getElementById("nextImage");
+			const images = document.querySelectorAll(".img-thumbnail");
+
+			let currentIndex = 0;
+			let touchStartX = 0;
+			let touchEndX = 0;
+
+			function openModal(index) {
+				currentIndex = index;
+				modal.style.display = "flex";
+				let bgImage = images[currentIndex].style.backgroundImage;
+				let imageUrl = bgImage.replace(/url\(["']?(.*?)["']?\)/, "$1");
+				modalImg.src = imageUrl;
+			}
+
+			function closeModalFunc() {
+				modal.style.display = "none";
+			}
+
+			function showPrev() {
+				currentIndex = (currentIndex - 1 + images.length) % images.length;
+				let bgImage = images[currentIndex].style.backgroundImage;
+				let imageUrl = bgImage.replace(/url\(["']?(.*?)["']?\)/, "$1");
+				modalImg.src = imageUrl;
+			}
+
+			function showNext() {
+				currentIndex = (currentIndex + 1) % images.length;
+				let bgImage = images[currentIndex].style.backgroundImage;
+				let imageUrl = bgImage.replace(/url\(["']?(.*?)["']?\)/, "$1");
+				modalImg.src = imageUrl;
+			}
+
+			images.forEach((img, index) => {
+				img.addEventListener("click", () => openModal(index));
+			});
+
+			closeModal.addEventListener("click", closeModalFunc);
+			prevBtn.addEventListener("click", showPrev);
+			nextBtn.addEventListener("click", showNext);
+
+			window.addEventListener("click", (event) => {
+				if (event.target === modal) closeModalFunc();
+			});
+
+			window.addEventListener("keydown", (event) => {
+				if (modal.style.display === "flex") {
+					if (event.key === "ArrowLeft") showPrev();
+					if (event.key === "ArrowRight") showNext();
+					if (event.key === "Escape") closeModalFunc();
+				}
+			});
+
+			// Touch event listeners for swipe gesture
+			modal.addEventListener("touchstart", (event) => {
+				touchStartX = event.touches[0].clientX;
+			});
+
+			modal.addEventListener("touchend", (event) => {
+				touchEndX = event.changedTouches[0].clientX;
+				handleSwipe();
+			});
+
+			function handleSwipe() {
+				let swipeThreshold = 50; // Minimum swipe distance
+				let swipeDistance = touchStartX - touchEndX;
+
+				if (swipeDistance > swipeThreshold) {
+					showNext(); // Swiped left → show next image
+				} else if (swipeDistance < -swipeThreshold) {
+					showPrev(); // Swiped right → show previous image
+				}
+			}
+		});
+		</script>
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.dropotron.min.js"></script>
+		<script src="assets/js/jquery.scrolly.min.js"></script>
+		<script src="assets/js/jquery.scrollex.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script src="assets/js/main.js"></script>
 
 	</body>
 </html>
